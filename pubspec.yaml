@@ -46,7 +46,7 @@ flutter_icons:
   ios: true
   image_path: "asset/images/svn_logo_ok.png"
 
-  flutter_lints: ^2.0.0
+flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
