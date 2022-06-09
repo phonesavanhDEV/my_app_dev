@@ -16,7 +16,7 @@ class _SettingState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Setting'),
+        title: Text('ການຕັ່ງຄ່າ'),
       ),
       body: Center(
           child: Column(

@@ -16,7 +16,7 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact'),
+        title: Text('ຕິດຕໍ່'),
       ),
       body: Center(
           child: Column(

@@ -16,13 +16,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('ໜ້າຫຼັກ'),
       ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Home Screen'),
+          Text('ໜ້າຫຼັກ'),
         ],
       )),
     );
