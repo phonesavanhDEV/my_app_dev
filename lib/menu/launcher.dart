@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home.dart';
-//import 'contact.dart';
-//import 'profile.dart';
-//import 'about.dart';
-//import 'settings.dart';
+import 'contact.dart';
+import 'profile.dart';
+import 'about.dart';
+import 'settings.dart';
 
 class Launcher extends StatefulWidget {
   static const routeName = '/';
@@ -21,10 +21,10 @@ class _LauncherState extends State<Launcher> {
   int _selectedIndex = 0;
   final List<Widget> _pageWidget = <Widget>[
     const Home(),
-    //const About(),
-   //const Profile(),
-    //const Contact(),
-    //const Settings(),
+    const About(),
+    const Profile(),
+    const Contact(),
+    const Settings(),
   ];
   final List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
