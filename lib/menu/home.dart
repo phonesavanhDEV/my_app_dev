@@ -19,13 +19,17 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('ໜ້າຫຼັກ'),
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('ໜ້າຫຼັກ'),
-        ],
-      )),
+      body: CarouselSlider(
+          items: null,
+          carouselController: null,
+          options: CarouselOptions(
+            autoPlay: true,
+            enlargeCenterPage: true,
+            viewportFraction: 0.9,
+            aspectRatio: 2.0,
+            initialPage: 2,
+          ),
+        ),
     );
   }
 }
