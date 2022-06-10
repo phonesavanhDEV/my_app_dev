@@ -52,10 +52,10 @@ flutter_icons:
   ios: true
 
 flutter_native_splash:
-  color: "#eadb10"
+  color: "#DD6E0F"
   image: assets/images/new_logo_svn01.png
   branding: assets/images/new_logo_svn01.png
-  color_dark: "#eadb10"
+  color_dark: "#DD6E0F"
   image_dark: assets/images/new_logo_svn01.png
   branding_dark: assets/images/new_logo_svn01.png
   
