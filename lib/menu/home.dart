@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/';
@@ -55,11 +56,88 @@ final List<Widget> imageSliders = imgList
     .toList();
 
 class _HomeState extends State<Home> {
+  String searchValue = '';
+
   @override
   Widget build(BuildContext context) {
+    // const drawerHeader = DrawerHeader(
+    //   decoration: BoxDecoration(
+    //       color: Colors.deepOrange,
+    //       image: DecorationImage(
+    //           image: AssetImage("assets/images/Jotun Nippon.jpg"),
+    //           fit: BoxFit.cover)),
+    // );
+    // return MaterialApp(
+    //     title: 'Example',
+    //     theme: ThemeData(primarySwatch: Colors.deepOrange),
+    //     home: Scaffold(
+    //       appBar: EasySearchBar(
+    //         title: Text(''),
+    //         onSearch: (value) => setState(() => searchValue = value),
+    //       ),
+    //       drawer: Drawer(
+    //           child: ListView(padding: EdgeInsets.zero, children: [
+    //         const SizedBox(height: 300, child: drawerHeader),
+    //         DrawerHeader(child : Stack(
+    //           children: [
+    //             Positioned(
+    //               bottom: 8.0,
+    //               left: 4.0,
+    //               child: Text("HomeCenter"),
+    //             )
+    //           ],)),
+
+    //         ListTile(
+    //             title: const Text('Item 1'),
+    //             onTap: () => Navigator.pop(context)),
+    //         ListTile(
+    //             title: const Text('Item 2'),
+    //             onTap: () => Navigator.pop(context))
+    //       ])),
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ໜ້າຫຼັກ'),
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("Home"),
+              accountEmail: Text("phonesavanh@gamil.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.6435-9/118874943_3472399469478138_4332737009688307690_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGl-eWBoJyWxFHxUn3-m165oWr_wv-6EWGhav_C_7oRYechsZE9nfX5Q4emUJdrwmZbmzfO3sQgPmIL0ZVR0fIm&_nc_ohc=7U5rHKnENYIAX_lXO5g&_nc_ht=scontent.fbkk10-1.fna&oh=00_AT8mrTl1ntnFKUkeJGYF5f6KN0xX0k6KPJE28ok4Jb-cMg&oe=62CA9C74"),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "https://appmaking.co/wp-content/uploads/2021/08/android-drawer-bg.jpeg",
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.account_box),
+              title: Text("About"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.grid_3x3_outlined),
+              title: Text("Products"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.contact_mail),
+              title: Text("Contact"),
+              onTap: () {},
+            )
+          ],
+        ),
       ),
       body: Container(
           child: CarouselSlider(
