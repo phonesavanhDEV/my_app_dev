@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
+
 
 class Home extends StatefulWidget {
   static const routeName = '/';
