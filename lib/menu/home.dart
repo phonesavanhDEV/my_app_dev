@@ -94,8 +94,13 @@ class _HomeState extends State<Home> {
     //             title: const Text('Item 2'),
     //             onTap: () => Navigator.pop(context))
     //       ])),
-    return Scaffold(
-      appBar: AppBar(),
+    return MaterialApp(
+       theme: ThemeData(primarySwatch: Colors.deepOrange),
+       home: Scaffold(
+      appBar: EasySearchBar(
+        title: Text(''),
+        onSearch: (value) => setState(() => searchValue = value),
+      ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -149,6 +154,6 @@ class _HomeState extends State<Home> {
         ),
         items: imageSliders,
       )),
-    );
+    ));
   }
 }
