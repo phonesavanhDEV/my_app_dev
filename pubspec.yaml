@@ -77,6 +77,12 @@ flutter:
     - assets/images/new_logo.png
     - assets/images/bg01.jpg
     - assets/images/background.webp
+    - assets/images/Hitachi.jpg
+    - assets/images/Jotun Nippon.jpg
+    - assets/images/Santa Monato.jpg
+    - assets/images/Vandi.jpg
+    - assets/images/Victoria Hamany.jpg
+
 
   fonts:
     - family: NotoSansLao
