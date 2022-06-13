@@ -16,7 +16,8 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ກ່ຽວກັບ'),
+        title: Text('ກ່ຽວກັບ', style: TextStyle(fontFamily: 'NotoSansLao'),),
+        
       ),
       body: Center(
           child: Column(

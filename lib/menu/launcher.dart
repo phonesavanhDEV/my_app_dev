@@ -29,23 +29,23 @@ class _LauncherState extends State<Launcher> {
   final List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.home),
-      label: 'Home',
+      label: 'ໜ້າຫຼັກ',
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.infoCircle),
-      label: 'About',
+      label: 'ກ່ຽວກັບ',
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.userAlt),
-      label: 'Profile',
+      label: 'ໂປຣໄຟຣ',
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.addressCard),
-      label: 'Contact',
+      label: 'ຕິດຕໍ່',
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.cog),
-      label: 'Settings',
+      label: 'ຕັ່ງຄ່າ',
     ),
   ];
 
@@ -65,7 +65,6 @@ class _LauncherState extends State<Launcher> {
         selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
-        
       ),
     );
   }
