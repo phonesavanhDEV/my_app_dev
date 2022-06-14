@@ -15,9 +15,9 @@ class _SettingState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ການຕັ່ງຄ່າ'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('ການຕັ່ງຄ່າ'),
+      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -15,9 +15,9 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ໂປຣໄຟຣ'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('ໂປຣໄຟຣ'),
+      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

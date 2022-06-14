@@ -15,10 +15,10 @@ class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ກ່ຽວກັບ', style: TextStyle(fontFamily: 'NotoSansLao'),),
+      // appBar: AppBar(
+      //   title: Text('ກ່ຽວກັບ', style: TextStyle(fontFamily: 'NotoSansLao'),),
         
-      ),
+      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

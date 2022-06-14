@@ -15,9 +15,9 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ຕິດຕໍ່'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('ຕິດຕໍ່'),
+      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
