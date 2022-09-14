@@ -13,16 +13,19 @@ class Home extends StatefulWidget {
 }
 
 final List<String> imgList = [
+  'https://cdn.pixabay.com/photo/2022/08/05/05/59/korea-7366036__340.jpg',
+  'https://cdn.pixabay.com/photo/2022/07/21/13/40/mongolian-girl-7336271__340.jpg',
+  'https://cdn.pixabay.com/photo/2022/08/02/04/11/city-7359471__340.jpg',
   // 'assets/images/Jotun Nippon.jpg',
   // 'assets/images/Hitachi.jpg',
   // 'assets/images/Santa Monato.jpg',
   // 'assets/images/Vandi.jpg',
   // 'assets/images/Victoria Hamany.jpg',
-  'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Jotun_Nippon.jpeg',
-  'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Vandi.jpeg',
-  'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/%E0%BA%81%E0%BA%B0%E0%BB%80%E0%BA%9A%E0%BA%B7%E0%BB%89%E0%BA%AD%E0%BA%87.jpeg',
-  'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Santa_Monato2.jpeg',
-  'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Victoria_Hamany21.jpeg',
+  // 'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Jotun_Nippon.jpeg',
+  // 'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Vandi.jpeg',
+  // 'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/%E0%BA%81%E0%BA%B0%E0%BB%80%E0%BA%9A%E0%BA%B7%E0%BB%89%E0%BA%AD%E0%BA%87.jpeg',
+  // 'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Santa_Monato2.jpeg',
+  // 'https://www.souvanny.la/administrator/assets/slide_image/image_show_resize/Victoria_Hamany21.jpeg',
 ];
 
 final List<Widget> imageSliders = imgList

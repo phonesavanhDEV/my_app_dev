@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './menu/launcher.dart';
+import './login/index.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   FlutterNativeSplash.remove();
-  runApp(const MyApp());
+  // runApp(const MyApp());
+
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      primaryColor: Colors.purple,
+    ),
+    title: "Login App",
+    home: LoginApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
