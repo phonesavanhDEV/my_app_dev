@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class Home extends StatefulWidget {
+  
   static const routeName = '/';
 
   const Home({Key? key}) : super(key: key);

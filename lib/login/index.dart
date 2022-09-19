@@ -1,8 +1,14 @@
 // import 'dart:ui';
+// ignore_for_file: unnecessary_null_comparison
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/menu/launcher.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 // void main()=>runApp(
 //     MaterialApp(
 //       debugShowCheckedModeBanner: false,
@@ -15,9 +21,10 @@ import '/menu/launcher.dart';
 // );
 
 class LoginApp extends StatelessWidget {
-  void click() {}
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    checkAuth(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -125,7 +132,7 @@ class LoginApp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: click,
+                            onPressed: () {},
                             child: const Text(
                               "ລືມລະຫັດຜ່ານ",
                               style: TextStyle(
@@ -137,14 +144,11 @@ class LoginApp extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
                         decoration: const BoxDecoration(
-                              
                             borderRadius: BorderRadius.all(Radius.circular(50)),
-                            
                             gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -153,7 +157,6 @@ class LoginApp extends StatelessWidget {
                                   Color(0xFFE94057),
                                   Color(0xFFF27121),
                                 ])),
-
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
@@ -166,7 +169,14 @@ class LoginApp extends StatelessWidget {
                           ),
                         ),
                       ),
-                       onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => const Launcher()), ); },
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const Launcher()),
+                        // );
+                        signIn();
+                      },
                     ),
                     const SizedBox(
                       height: 17,
@@ -184,23 +194,59 @@ class LoginApp extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                            onPressed: click,
+                            onPressed: () async {
+                              // var isAppInstalledResult =
+                              await LaunchApp.openApp(
+                                androidPackageName: 'com.facebook.katana',
+                                //iosUrlScheme: 'facebook://',
+                                openStore: true,
+                              );
+                              // print(
+                              //     'isAppInstalledResult => $isAppInstalledResult ${isAppInstalledResult.runtimeType}');
+                            },
                             icon: const Icon(FontAwesomeIcons.facebook,
                                 color: Colors.blue)),
                         IconButton(
-                            onPressed: click,
+                            onPressed: () async {
+                              // var isAppInstalledResult =
+                              await LaunchApp.openApp(
+                                androidPackageName: 'com.android.chrome',
+                                //iosUrlScheme: 'facebook://',
+                                openStore: true,
+                              );
+                              // print(
+                              //     'isAppInstalledResult => $isAppInstalledResult ${isAppInstalledResult.runtimeType}');
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.google,
                               color: Colors.redAccent,
                             )),
                         IconButton(
-                            onPressed: click,
+                            onPressed: () async {
+                              // var isAppInstalledResult =
+                              await LaunchApp.openApp(
+                                androidPackageName: 'com.android.twitter',
+                                //iosUrlScheme: 'facebook://',
+                                openStore: true,
+                              );
+                              // print(
+                              //     'isAppInstalledResult => $isAppInstalledResult ${isAppInstalledResult.runtimeType}');
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.twitter,
-                              color: Colors.orangeAccent,
+                              color: Colors.lightBlue,
                             )),
                         IconButton(
-                            onPressed: click,
+                            onPressed: () async {
+                              // var isAppInstalledResult =
+                              await LaunchApp.openApp(
+                                androidPackageName: 'com.android.linkedinIn',
+                                //iosUrlScheme: 'facebook://',
+                                openStore: true,
+                              );
+                              // print(
+                              //     'isAppInstalledResult => $isAppInstalledResult ${isAppInstalledResult.runtimeType}');
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.linkedinIn,
                               color: Colors.green,
@@ -216,4 +262,29 @@ class LoginApp extends StatelessWidget {
       ),
     );
   }
+
+  signIn() {
+    _auth
+        .signInWithEmailAndPassword(
+            email: "phonesomphong@gmail.com", password: "123456")
+        .then((user) {
+      print("signed in ${user}");
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  Future checkAuth(BuildContext context) async {
+    final User user = await _auth.currentUser!;
+    if (user != null) {
+      print("Already singed-in with");
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Launcher()));
+    }
+  }
 }
+
+// void _FaceButtonPressed() {
+//   print("search button clicked");
+// }
+
