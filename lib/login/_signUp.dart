@@ -16,6 +16,8 @@ class _MySignUpPageState extends State<MySignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  bool _isHidden = true;
+  bool _isHidden1 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +154,14 @@ class _MySignUpPageState extends State<MySignUpPage> {
       //     ))
       child: TextField(
         controller: passwordController,
-        obscureText: true,
+        obscureText: _isHidden,
         decoration: InputDecoration(
-            suffix: Icon(
-              FontAwesomeIcons.eyeSlash,
-              color: Colors.red,
-            ),
+            suffix: InkWell(
+                onTap: _togglePasswordView,
+                child: Icon(
+                  _isHidden ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                  color: Colors.red,
+                )),
             labelText: "ລະຫັດຜ່ານ",
             labelStyle: TextStyle(
               fontFamily: 'NotoSansLao',
@@ -186,12 +190,14 @@ class _MySignUpPageState extends State<MySignUpPage> {
 
       child: TextField(
         controller: confirmController,
-        obscureText: true,
+        obscureText: _isHidden1,
         decoration: InputDecoration(
-            suffix: Icon(
-              FontAwesomeIcons.eyeSlash,
-              color: Colors.red,
-            ),
+            suffix: InkWell(
+                onTap: _togglePasswordView1,
+                child: Icon(
+                  _isHidden1 ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                  color: Colors.red,
+                )),
             labelText: "ຢືນຢັນລະຫັດ",
             labelStyle: TextStyle(
               fontFamily: 'NotoSansLao',
@@ -201,6 +207,18 @@ class _MySignUpPageState extends State<MySignUpPage> {
             )),
       ),
     );
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
+  void _togglePasswordView1() {
+    setState(() {
+      _isHidden1 = !_isHidden1;
+    });
   }
 
   signUp() {

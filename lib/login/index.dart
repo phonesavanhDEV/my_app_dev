@@ -22,12 +22,18 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 //       home: LoginApp(),
 //     )
 // );
+class LoginApp extends StatefulWidget {
+  LoginApp({Key? key}) : super(key: key);
+  @override
+  _LoginApp createState() => _LoginApp();
+}
 
-class LoginApp extends StatelessWidget {
+class _LoginApp extends State<LoginApp> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  bool _isHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -120,12 +126,20 @@ class LoginApp extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: _isHidden,
                         decoration: InputDecoration(
-                            suffix: Icon(
-                              FontAwesomeIcons.eyeSlash,
-                              color: Colors.red,
-                            ),
+                            suffix: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _isHidden = !_isHidden;
+                                  });
+                                },
+                                child: Icon(
+                                  _isHidden
+                                      ? FontAwesomeIcons.eyeSlash
+                                      : FontAwesomeIcons.eye,
+                                  color: Colors.red,
+                                )),
                             labelText: "ລະຫັດຜ່ານ",
                             labelStyle: TextStyle(
                               fontFamily: 'NotoSansLao',
@@ -196,7 +210,9 @@ class LoginApp extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => MySignUpPage()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MySignUpPage()));
                       },
                       child: const Text(
                         "..ສະໝັກສະມາຊິກ..",
