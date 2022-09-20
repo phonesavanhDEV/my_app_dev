@@ -6,6 +6,8 @@ import 'contact.dart';
 import 'profile.dart';
 import 'about.dart';
 import 'settings.dart';
+import '/login/index.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Launcher extends StatefulWidget {
   static const routeName = '/';
@@ -114,6 +116,16 @@ class _LauncherState extends State<Launcher> {
                 style: TextStyle(fontFamily: 'NotoSansLao'),
               ),
               onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text(
+                "ອອກລະບົບ",
+                style: TextStyle(fontFamily: 'NotoSansLao'),
+              ),
+              onTap: () {
+                signOut(context);
+                },
             )
           ],
         ),
@@ -131,5 +143,13 @@ class _LauncherState extends State<Launcher> {
         onTap: _onItemTapped,
       ),
     ));
+  }
+
+   void signOut(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginApp()),
+        ModalRoute.withName('/'));
   }
 }

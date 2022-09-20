@@ -1,13 +1,15 @@
 // import 'dart:ui';
 // ignore_for_file: unnecessary_null_comparison
 
+// import 'dart:js';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/menu/launcher.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
 // void main()=>runApp(
 //     MaterialApp(
@@ -22,10 +24,15 @@ import 'package:firebase_core/firebase_core.dart';
 
 class LoginApp extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    checkAuth(context);
+    //checkAuth(context);
     return Scaffold(
+      key: scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -87,7 +94,8 @@ class LoginApp extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                             suffix: Icon(
                               FontAwesomeIcons.envelope,
@@ -109,7 +117,8 @@ class LoginApp extends StatelessWidget {
                     Container(
                       width: 260,
                       height: 60,
-                      child: const TextField(
+                      child: TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                             suffix: Icon(
@@ -132,7 +141,9 @@ class LoginApp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _ButtonPressed(context);
+                            },
                             child: const Text(
                               "ລືມລະຫັດຜ່ານ",
                               style: TextStyle(
@@ -175,18 +186,29 @@ class LoginApp extends StatelessWidget {
                         //   MaterialPageRoute(
                         //       builder: (context) => const Launcher()),
                         // );
-                        signIn();
+                        signIn(context);
                       },
                     ),
                     const SizedBox(
                       height: 17,
                     ),
-                    const Text(
-                      "ຫຼື ເຂົ້າສູ່ລະບົບຜ່ານບັນຊີອື່ນ",
-                      style: TextStyle(
-                          fontFamily: 'NotoSansLao',
-                          fontWeight: FontWeight.normal),
+                    TextButton(
+                      onPressed: () {
+                        _ButtonPressed(context);
+                      },
+                      child: const Text(
+                        "..ສະໝັກສະມາຊິກ..",
+                        style: TextStyle(
+                            fontFamily: 'NotoSansLao',
+                            color: Colors.deepOrange),
+                      ),
                     ),
+                    // const Text(
+                    //   "ຫຼື ເຂົ້າສູ່ລະບົບຜ່ານບັນຊີອື່ນ",
+                    //   style: TextStyle(
+                    //       fontFamily: 'NotoSansLao',
+                    //       fontWeight: FontWeight.normal),
+                    // ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -263,28 +285,35 @@ class LoginApp extends StatelessWidget {
     );
   }
 
-  signIn() {
+  Future signIn(BuildContext context) async {
     _auth
         .signInWithEmailAndPassword(
-            email: "phonesomphong@gmail.com", password: "123456")
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    )
         .then((user) {
-      print("signed in ${user}");
+      //print("signed in ${user}");
+      checkAuth(context);
     }).catchError((error) {
-      print(error);
+      print(error.message);
+      ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+        content: Text(error.message, style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red,
+      ));
     });
   }
 
   Future checkAuth(BuildContext context) async {
-    final User user = await _auth.currentUser!;
-    if (user != null) {
-      print("Already singed-in with");
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Launcher()));
-    }
+    final User? user = await _auth.currentUser();
+    print("Already singed-in with");
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Launcher()));
   }
 }
 
-// void _FaceButtonPressed() {
-//   print("search button clicked");
-// }
-
+void _ButtonPressed(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+    content: Text("coming soon", style: TextStyle(color: Colors.white)),
+    backgroundColor: Colors.red,
+  ));
+}
