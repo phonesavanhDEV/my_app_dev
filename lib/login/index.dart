@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/menu/launcher.dart';
+import '/login/_signUp.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 // import 'package:firebase_core/firebase_core.dart';
 
@@ -194,7 +195,8 @@ class LoginApp extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        _ButtonPressed(context);
+                        Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => MySignUpPage()));
                       },
                       child: const Text(
                         "..ສະໝັກສະມາຊິກ..",
@@ -295,7 +297,7 @@ class LoginApp extends StatelessWidget {
       //print("signed in ${user}");
       checkAuth(context);
     }).catchError((error) {
-      print(error.message);
+      // print(error.message);
       ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
         content: Text(error.message, style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.red,
