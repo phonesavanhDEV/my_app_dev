@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-// import './menu/launcher.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import './login/index.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   FlutterNativeSplash.remove();
   // runApp(const MyApp());
- 
+
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -17,6 +18,7 @@ Future<void> main() async {
     ),
     title: "Login App",
     home: LoginApp(),
+    builder: EasyLoading.init(),
   ));
 }
 

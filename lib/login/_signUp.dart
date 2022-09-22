@@ -15,6 +15,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
+
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   bool _isHidden = true;
   bool _isHidden1 = true;
@@ -49,7 +50,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
                 children: <Widget>[
                   Container(
                     width: 300,
-                    height: 440,
+                    height: 450,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -70,7 +71,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
                           buildTextFieldEmail(),
                           buildTextFieldPassword(),
                           buildTextFieldPasswordConfirm(),
-                          buildButtonSignUp(context)
+                          buildButtonSignUp(context),
                         ]),
                   )
                 ],
@@ -143,15 +144,6 @@ class _MySignUpPageState extends State<MySignUpPage> {
       padding: EdgeInsets.all(12),
       margin: EdgeInsets.only(top: 12),
       decoration: BoxDecoration(),
-      // child: TextField(
-      //     controller: passwordController,
-      //     obscureText: true,
-      //     decoration: InputDecoration.collapsed(hintText: "ລະຫັດຜ່ານ"),
-      //     style: TextStyle(
-      //       fontFamily: 'NotoSansLao',
-      //       fontSize: 18,
-      //       fontWeight: FontWeight.normal,
-      //     ))
       child: TextField(
         controller: passwordController,
         obscureText: _isHidden,
@@ -225,6 +217,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String confirmPassword = confirmController.text.trim();
+
     if (password == confirmPassword && password.length >= 6) {
       _auth
           .createUserWithEmailAndPassword(email: email, password: password)

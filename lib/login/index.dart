@@ -3,12 +3,18 @@
 
 // import 'dart:js';
 
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_app_dev/login/_forgotPassword.dart';
+import 'package:my_app_dev/login/_phoneVerify.dart';
+import 'package:my_app_dev/menu/home.dart';
 import '/menu/launcher.dart';
 import '/login/_signUp.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 // import 'package:firebase_core/firebase_core.dart';
 
@@ -34,6 +40,39 @@ class _LoginApp extends State<LoginApp> {
   TextEditingController passwordController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   bool _isHidden = true;
+  Timer? _timer;
+
+  void _styleLoad() {
+    EasyLoading.instance
+      ..displayDuration = const Duration(seconds: 2)
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      ..progressColor = Colors.blue.shade900
+      ..backgroundColor = Colors.black
+      ..indicatorColor = Colors.white
+      ..textColor = Colors.white
+      ..maskColor = Colors.grey.withOpacity(0.7)
+      ..userInteractions = true
+      ..dismissOnTap = false
+      ..textStyle = const TextStyle(
+        color: Colors.white,
+        fontFamily: 'NotoSansLao',
+        fontSize: 18,
+      );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +196,11 @@ class _LoginApp extends State<LoginApp> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              _ButtonPressed(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MyforgotPassword()));
                             },
                             child: const Text(
                               "ລືມລະຫັດຜ່ານ",
@@ -196,12 +239,33 @@ class _LoginApp extends State<LoginApp> {
                         ),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const Launcher()),
-                        // );
-                        signIn(context);
+                        _styleLoad();
+                        EasyLoading.show(
+                          status: 'ກຳລັງໂຫຼດ...',
+                          maskType: EasyLoadingMaskType.black,
+                        );
+                        _timer = new Timer(const Duration(seconds: 2), () {
+                          setState(() {
+                            signIn(context);
+                            EasyLoading.dismiss();
+                          });
+                        });
+
+                        // _progress = 0;
+                        // _timer?.cancel();
+                        // _timer = Timer.periodic(
+                        //     const Duration(milliseconds: 100), (Timer timer) {
+                        //   EasyLoading.showProgress(_progress,
+                        //       status:
+                        //           '${(_progress * 100).toStringAsFixed(0)}%');
+                        //   _progress += 0.03;
+
+                        //   if (_progress >= 1) {
+                        //     _timer?.cancel();
+                        //     EasyLoading.dismiss();
+                        //   }
+                        //   //signIn(context);
+                        // });
                       },
                     ),
                     const SizedBox(
@@ -277,18 +341,14 @@ class _LoginApp extends State<LoginApp> {
                               color: Colors.lightBlue,
                             )),
                         IconButton(
-                            onPressed: () async {
-                              // var isAppInstalledResult =
-                              await LaunchApp.openApp(
-                                androidPackageName: 'com.android.linkedinIn',
-                                //iosUrlScheme: 'facebook://',
-                                openStore: true,
-                              );
-                              // print(
-                              //     'isAppInstalledResult => $isAppInstalledResult ${isAppInstalledResult.runtimeType}');
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyPhonePage()));
                             },
                             icon: const Icon(
-                              FontAwesomeIcons.linkedinIn,
+                              FontAwesomeIcons.phone,
                               color: Colors.green,
                             ))
                       ],
