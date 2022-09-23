@@ -10,8 +10,6 @@ import '/login/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Launcher extends StatefulWidget {
-  static const routeName = '/';
-
   const Launcher({Key? key}) : super(key: key);
 
   @override
@@ -70,7 +68,7 @@ class _LauncherState extends State<Launcher> {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: Text("Home"),
-                  accountEmail: Text("phonesavanh@gamil.com"),
+                  accountEmail: Text("xxx", style: TextStyle(fontSize: 16)),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage: AssetImage('assets/images/new_logo.png'),

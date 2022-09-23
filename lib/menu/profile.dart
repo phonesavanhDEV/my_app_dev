@@ -68,16 +68,22 @@ class _ProfileState extends State<Profile> {
                 final _price = (todoList.data() as dynamic)['price'];
 
                 final _type = (todoList.data() as dynamic)['type'];
-
-                //final currentUser = loggedInUser.email;
-                // print('Current user $currentUser');
-                // print('logged user $loggedIn');
+                final _descript = (todoList.data() as dynamic)['description'];
+                final _dateM = (todoList.data() as dynamic)['DateM'];
+                final _dateE = (todoList.data() as dynamic)['DateE'];
+                final _amount = (todoList.data() as dynamic)['Amount'];
+                final _createDate = (todoList.data() as dynamic)['createDate'];
 
                 final messageWidget = MessageBubble(
                   name: '$_name',
                   //isLoggedIn: currentUser == loggedIn,
                   price: '$_price',
                   type: '$_type',
+                  description: '$_descript',
+                  DateM: '$_dateM',
+                  DateE: '$_dateE',
+                  Amount: '$_amount',
+                  createDate: '$_createDate',
                 );
 
                 todoWidgets.add(messageWidget);
@@ -102,54 +108,69 @@ class MessageBubble extends StatelessWidget {
     required this.name,
     required this.price,
     required this.type,
+    required this.description,
+    required this.DateM,
+    required this.DateE,
+    required this.Amount,
+    required this.createDate,
   });
   final String name;
   final String price;
   final String type;
-
+  final String description;
+  final String DateM;
+  final String DateE;
+  final String Amount;
+  final String createDate;
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(10.0),
-        child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Text('$name',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 30.0, color: Colors.black)),
-                ],
-              ),
-              Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                      bottomLeft: Radius.circular(30.0)),
-                  color: Colors.lightBlueAccent,
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('$type',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('$price',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                          ])))
-            ]));
+              Text('$DateE',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 30.0, color: Colors.black)),
+            ],
+          ),
+          Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30.0),
+                  bottomRight: Radius.circular(30.0),
+                  bottomLeft: Radius.circular(30.0)),
+              color: Colors.lightBlueAccent,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('$name',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('$Amount',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('$price',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ])))
+        ]));
   }
 }

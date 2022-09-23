@@ -370,10 +370,8 @@ class _LoginApp extends State<LoginApp> {
       password: passwordController.text.trim(),
     )
         .then((user) {
-      //print("signed in ${user}");
       checkAuth(context);
     }).catchError((error) {
-      // print(error.message);
       ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
         content: Text(error.message, style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.red,
@@ -383,9 +381,11 @@ class _LoginApp extends State<LoginApp> {
 
   Future checkAuth(BuildContext context) async {
     final User? user = await _auth.currentUser();
-    print("Already singed-in with");
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Launcher()));
+    if (user != null) {
+      print("Already singed-in with");
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Launcher()));
+    }
   }
 }
 

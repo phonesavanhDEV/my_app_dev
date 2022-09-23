@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_dev/menu/profile.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:timetable/todo_list.dart';
 
 class About extends StatefulWidget {
@@ -23,10 +25,18 @@ class _AboutState extends State<About> {
   late String Name;
   late String price;
   late String type;
+  late String description;
+  DateTime? DateM;
+  DateTime? DateE;
+  late String Amount;
 
   late TextEditingController nameTextController;
   late TextEditingController priceTextController;
   late TextEditingController typeTextController;
+  late TextEditingController descriptionTextController;
+  late TextEditingController dateMTextController;
+  late TextEditingController dateETextController;
+  late TextEditingController amountTextController;
 
   @override
   void initState() {
@@ -35,6 +45,10 @@ class _AboutState extends State<About> {
     nameTextController = TextEditingController();
     priceTextController = TextEditingController();
     typeTextController = TextEditingController();
+    descriptionTextController = TextEditingController();
+    dateMTextController = TextEditingController();
+    dateETextController = TextEditingController();
+    amountTextController = TextEditingController();
   }
 
   void getCurrentUser() async {
@@ -54,6 +68,10 @@ class _AboutState extends State<About> {
     nameTextController.dispose();
     priceTextController.dispose();
     typeTextController.dispose();
+    descriptionTextController.dispose();
+    dateMTextController.dispose();
+    dateETextController.dispose();
+    amountTextController.dispose();
     super.dispose();
   }
 
@@ -149,14 +167,14 @@ class _AboutState extends State<About> {
                   height: 8.0,
                 ),
                 TextField(
-                  //controller: typeTextController,
+                  controller: descriptionTextController,
                   onChanged: (value) {
-                    type = value;
+                    description = value;
                   },
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'xxxx',
+                    hintText: 'ລາຍລະອຽດ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -169,15 +187,40 @@ class _AboutState extends State<About> {
                 SizedBox(
                   height: 8.0,
                 ),
+                // CupertinoButton(
+                //   padding: EdgeInsetsDirectional.zero,
+                //   child: const Text('Show Picker'),
+                //   onPressed: () => _showDatePicker(context),
+                // ),
                 TextField(
-                  //controller: typeTextController,
-                  onChanged: (value) {
-                    type = value;
+                  readOnly: true,
+                  controller: dateMTextController,
+                  // onChanged: (value) {
+                  //   DateM = DateTime.parse(value.toString());
+                  // },
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1990),
+                      lastDate: DateTime(9999),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('dd/MM/yyyy').format(pickedDate);
+
+                      setState(() {
+                        dateMTextController.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
                   },
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'xxxx',
+                    hintText: 'ວັນທີ່ຜະລິດ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -186,19 +229,41 @@ class _AboutState extends State<About> {
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
+                  //keyboardType: TextInputType.datetime,
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
                 TextField(
-                  //controller: typeTextController,
-                  onChanged: (value) {
-                    type = value;
+                  readOnly: true,
+                  controller: dateETextController,
+                  // onChanged: (value) {
+                  //   DateE = DateTime.parse(value.toString());
+
+                  // },
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1990),
+                      lastDate: DateTime(9999),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('dd/MM/yyyy').format(pickedDate);
+
+                      setState(() {
+                        dateETextController.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
                   },
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'xxxx',
+                    hintText: 'ວັນທີ່ໝົດອາຍຸ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -207,19 +272,20 @@ class _AboutState extends State<About> {
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
+                  // keyboardType: TextInputType.datetime,
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
                 TextField(
-                  //controller: typeTextController,
+                  controller: amountTextController,
                   onChanged: (value) {
-                    type = value;
+                    Amount = value;
                   },
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'xxxx',
+                    hintText: 'ຈຳນວນ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -228,6 +294,7 @@ class _AboutState extends State<About> {
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 8.0,
@@ -253,11 +320,20 @@ class _AboutState extends State<About> {
                           'Name': Name,
                           'price': price,
                           'type': type,
+                          'description': description,
+                          'DateM': dateMTextController.text,
+                          'DateE': dateETextController.text,
+                          'Amount': Amount,
+                          'createDate': DateTime.now(),
                           //'sender': loggedInUser.email,
                         });
                         nameTextController.clear();
                         priceTextController.clear();
                         typeTextController.clear();
+                        descriptionTextController.clear();
+                        dateETextController.clear();
+                        dateMTextController.clear();
+                        amountTextController.clear();
                       },
                     ),
                   ),
