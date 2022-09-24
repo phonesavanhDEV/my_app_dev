@@ -20,20 +20,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    //getCurrentUser();
   }
-
-  // void getCurrentUser() async {
-  //   try {
-  //     final user = _auth.currentUser;
-  //     if (user != null) {
-  //       loggedInUser = user;
-  //       print(loggedInUser.email);
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +34,7 @@ class _ProfileState extends State<Profile> {
             ///
             stream: _fireStore
                 .collection('productDetail')
-                .orderBy('Name', descending: false)
+                .orderBy('DateE', descending: false)
                 .snapshots(),
 
             ///flutter aysnc snapshot

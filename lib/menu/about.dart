@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:timetable/todo_list.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class About extends StatefulWidget {
   static const routeName = '/';
@@ -26,10 +28,10 @@ class _AboutState extends State<About> {
   late String price;
   late String type;
   late String description;
-  DateTime? DateM;
-  DateTime? DateE;
+  // DateTime? DateM;
+  // DateTime? DateE;
   late String Amount;
-
+  XFile? _image;
   late TextEditingController nameTextController;
   late TextEditingController priceTextController;
   late TextEditingController typeTextController;
@@ -73,11 +75,6 @@ class _AboutState extends State<About> {
     dateETextController.dispose();
     amountTextController.dispose();
     super.dispose();
-  }
-
-  void logout() {
-    _auth.signOut();
-    Navigator.pop(context);
   }
 
   @override
@@ -296,6 +293,91 @@ class _AboutState extends State<About> {
                   ),
                   keyboardType: TextInputType.number,
                 ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                if (_image != null)
+                  InkWell(
+                    child: Container(
+                      margin: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.red, width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      height: 300,
+                      width: 70,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          child: Image.file(
+                              fit: BoxFit.fill,
+                              height: 150.0,
+                              // width: 150.0,
+                              File(_image!.path))),
+                    ),
+                  ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final ImagePicker _picker = ImagePicker();
+                        final img = await _picker.pickImage(
+                            source: ImageSource.gallery);
+                        setState(() {
+                          _image = img;
+                        });
+                      },
+                      label: const Text(
+                        'ເລືອກ',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'NotoSansLao',
+                            color: Colors.white),
+                      ),
+                      icon: const Icon(Icons.image),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final ImagePicker _picker = ImagePicker();
+                        final img =
+                            await _picker.pickImage(source: ImageSource.camera);
+                        setState(() {
+                          _image = img;
+                        });
+                      },
+                      label: const Text(
+                        'ກ້ອງ',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'NotoSansLao',
+                            color: Colors.white),
+                      ),
+                      icon: const Icon(Icons.camera_alt_outlined),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _image = null; //this is important
+                        });
+                      },
+                      label: const Text(
+                        'ລຶບ',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'NotoSansLao',
+                            color: Colors.white),
+                      ),
+                      icon: const Icon(Icons.close),
+                    )
+                  ],
+                ),
+                // if (_image != null)
+                //   Expanded(child: Image.file(File(_image!.path)))
+                // else
+                //   const SizedBox(),
+
                 SizedBox(
                   height: 8.0,
                 ),
