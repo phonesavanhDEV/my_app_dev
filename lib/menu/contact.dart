@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Contact extends StatefulWidget {
-  static const routeName = '/';
-
-  const Contact({Key? key}) : super(key: key);
+  const Contact({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

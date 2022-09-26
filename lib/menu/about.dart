@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:timetable/todo_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class About extends StatefulWidget {
   static const routeName = '/';
@@ -21,8 +24,8 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
   final _fireStore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
-  late User loggedInUser;
+
+  late String imgValue;
 
   late String Name;
   late String price;
@@ -43,7 +46,7 @@ class _AboutState extends State<About> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+
     nameTextController = TextEditingController();
     priceTextController = TextEditingController();
     typeTextController = TextEditingController();
@@ -51,18 +54,6 @@ class _AboutState extends State<About> {
     dateMTextController = TextEditingController();
     dateETextController = TextEditingController();
     amountTextController = TextEditingController();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user as User;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override
@@ -87,24 +78,33 @@ class _AboutState extends State<About> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '#ເພີ່ມສິນຄ້າ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'NotoSansLao',
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '#ເພີ່ມສິນຄ້າ',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontFamily: 'NotoSansLao',
+                            color: Color.fromARGB(255, 50, 127, 190),
+                          ),
+                        ),
+                        Icon(
+                          FontAwesomeIcons.boxArchive,
+                          color: Colors.lightGreen,
+                          size: 40.0,
+                        ),
+                      ],
+                    )),
                 TextField(
                   controller: nameTextController,
                   onChanged: (value) {
                     Name = value;
                   },
                   decoration: InputDecoration(
-                    hintText: 'ຊື່ສິນຄ້າ',
+                    hintText: '@ຊື່ສິນຄ້າ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -126,7 +126,7 @@ class _AboutState extends State<About> {
                     price = value;
                   },
                   decoration: InputDecoration(
-                    hintText: 'ລາຄາ',
+                    hintText: '@ລາຄາ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -150,7 +150,7 @@ class _AboutState extends State<About> {
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'ປະເພດ',
+                    hintText: '@ປະເພດ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -171,7 +171,7 @@ class _AboutState extends State<About> {
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'ລາຍລະອຽດ',
+                    hintText: '@ລາຍລະອຽດ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -217,7 +217,7 @@ class _AboutState extends State<About> {
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'ວັນທີ່ຜະລິດ',
+                    hintText: '@ວັນທີ່ຜະລິດ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -228,6 +228,7 @@ class _AboutState extends State<About> {
                   ),
                   //keyboardType: TextInputType.datetime,
                 ),
+
                 SizedBox(
                   height: 8.0,
                 ),
@@ -260,7 +261,7 @@ class _AboutState extends State<About> {
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'ວັນທີ່ໝົດອາຍຸ',
+                    hintText: '@ວັນທີ່ໝົດອາຍຸ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -282,7 +283,7 @@ class _AboutState extends State<About> {
                   decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    hintText: 'ຈຳນວນ',
+                    hintText: '@ຈຳນວນ',
                     hintStyle: TextStyle(
                       fontSize: 18,
                       fontFamily: 'NotoSansLao',
@@ -385,19 +386,24 @@ class _AboutState extends State<About> {
                   padding: EdgeInsets.symmetric(vertical: 15.0),
                   child: Material(
                     // elevation: 5.0,
-                    color: Colors.lightBlueAccent,
+                    color: Colors.lightGreen,
                     borderRadius: BorderRadius.circular(30.0),
                     child: MaterialButton(
                       minWidth: 200.0,
                       height: 42.0,
+                      // child: Icon(
+                      //   FontAwesomeIcons.folderPlus,
+                      //   color: Colors.white,
+                      // ),
                       child: Text(
-                        'ເພີ່ມ',
+                        '[+] ເພີ່ມ',
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'NotoSansLao',
                             color: Colors.white),
                       ),
                       onPressed: () async {
+                        uploadFile();
                         _fireStore.collection('productDetail').add({
                           'Name': Name,
                           'price': price,
@@ -407,7 +413,7 @@ class _AboutState extends State<About> {
                           'DateE': dateETextController.text,
                           'Amount': Amount,
                           'createDate': DateTime.now(),
-                          //'sender': loggedInUser.email,
+                          'Image': imgValue,
                         });
                         nameTextController.clear();
                         priceTextController.clear();
@@ -416,11 +422,38 @@ class _AboutState extends State<About> {
                         dateETextController.clear();
                         dateMTextController.clear();
                         amountTextController.clear();
+                        setState(() {
+                          _image = null; //refresh the image after upoad
+                        });
                       },
                     ),
                   ),
                 ),
               ])),
     );
+  }
+
+  uploadFile() async {
+    if (_image == null) return;
+    final fileName = basename(_image!.path);
+    final destination = '$fileName';
+
+    try {
+      final ref = FirebaseStorage.instance.ref(destination).child('');
+      await ref.putFile(File(_image!.path));
+      // FirebaseStorage firebaseStorageRef = FirebaseStorage.instance;
+      // Reference ref = firebaseStorageRef
+      //     .ref()
+      //     .child('$fileName' + DateTime.now().toString());
+      // UploadTask uploadTask = ref.putFile(File(_image!.path));
+
+      // uploadTask.then((res) {
+      //   res.ref.getDownloadURL().then((value) => imgValue = value);
+      // });
+
+      imgValue = await ref.getDownloadURL();
+    } catch (e) {
+      print(e);
+    }
   }
 }

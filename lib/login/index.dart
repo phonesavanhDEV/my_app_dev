@@ -147,7 +147,7 @@ class _LoginApp extends State<LoginApp> {
                               FontAwesomeIcons.envelope,
                               color: Colors.red,
                             ),
-                            labelText: "ອີເມວ",
+                            labelText: "#ອີເມວ ...@example.com",
                             labelStyle: TextStyle(
                               fontFamily: 'NotoSansLao',
                             ),
@@ -179,7 +179,7 @@ class _LoginApp extends State<LoginApp> {
                                       : FontAwesomeIcons.eye,
                                   color: Colors.red,
                                 )),
-                            labelText: "ລະຫັດຜ່ານ",
+                            labelText: "#ລະຫັດຜ່ານ ******",
                             labelStyle: TextStyle(
                               fontFamily: 'NotoSansLao',
                             ),
@@ -203,7 +203,7 @@ class _LoginApp extends State<LoginApp> {
                                           MyforgotPassword()));
                             },
                             child: const Text(
-                              "ລືມລະຫັດຜ່ານ",
+                              "ລືມລະຫັດຜ່ານ?",
                               style: TextStyle(
                                   fontFamily: 'NotoSansLao',
                                   color: Colors.deepOrange),
@@ -279,7 +279,7 @@ class _LoginApp extends State<LoginApp> {
                                 builder: (context) => MySignUpPage()));
                       },
                       child: const Text(
-                        "..ສະໝັກສະມາຊິກ..",
+                        "(...ສະໝັກສະມາຊິກ...)",
                         style: TextStyle(
                             fontFamily: 'NotoSansLao',
                             color: Colors.deepOrange),
