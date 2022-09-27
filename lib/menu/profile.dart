@@ -115,70 +115,33 @@ class MessageBubble extends StatelessWidget {
   final String photo;
   @override
   Widget build(BuildContext context) {
-    // return Padding(
-    //     padding: EdgeInsets.all(10.0),
-    //     child: Column(children: [
-    //       Row(
-    //         children: [
-    //           // Text('$DateE',
-    //           //     textAlign: TextAlign.left,
-    //           //     style: TextStyle(fontSize: 30.0, color: Colors.black)),
-    //           Image.network('$photo'),
-    //         ],
-    //       ),
-    //       Material(
-    //           elevation: 5.0,
-    //           borderRadius: BorderRadius.only(
-    //               topRight: Radius.circular(30.0),
-    //               bottomRight: Radius.circular(30.0),
-    //               bottomLeft: Radius.circular(30.0)),
-    //           color: Colors.lightBlueAccent,
-    //           child: Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                   children: [
-    //                     Padding(
-    //                       padding: const EdgeInsets.all(8.0),
-    //                       child: Text('$name',
-    //                           style: TextStyle(
-    //                             fontSize: 20.0,
-    //                             color: Colors.black,
-    //                           )),
-    //                     ),
-    //                     Padding(
-    //                       padding: const EdgeInsets.all(8.0),
-    //                       child: Text('$Amount',
-    //                           style: TextStyle(
-    //                             fontSize: 20.0,
-    //                             color: Colors.black,
-    //                           )),
-    //                     ),
-    //                     Padding(
-    //                       padding: const EdgeInsets.all(8.0),
-    //                       child: Text('$price',
-    //                           style: TextStyle(
-    //                             fontSize: 20.0,
-    //                             color: Colors.black,
-    //                           )),
-    //                     ),
-    //                   ])))
-    //     ]));
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      elevation: 10,
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        dense: false,
-        leading: Image.network('$photo'),
-        title: Text('$name'),
-        subtitle: Text('$price'),
-        trailing: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.delete,
-            color: Colors.red,
-          ),
-        ),
-      ),
+          dense: false,
+          leading: Image.network('$photo'),
+          title: Text('$name'),
+          subtitle: Text('$price'),
+          trailing: Wrap(
+            spacing: 12,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.red,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
