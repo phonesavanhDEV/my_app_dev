@@ -47,6 +47,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   firebase_storage: ^10.3.9
   image_picker: ^0.8.5+3
+  qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:

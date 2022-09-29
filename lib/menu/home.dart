@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_app_dev/qr_scanner/_qr_scan.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/';
@@ -257,7 +258,12 @@ class _HomeState extends State<Home> {
                       Column(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => QRViewExample()));
+                            },
                             icon: const Icon(
                               Icons.qr_code_2_rounded,
                               color: Colors.red,
