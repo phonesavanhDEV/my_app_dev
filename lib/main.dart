@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import './login/index.dart';
+import './menu/launcher.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -16,7 +18,7 @@ Future<void> main() async {
     theme: ThemeData(
       primaryColor: Colors.purple,
     ),
-    title: "Login App",
+    title: "Home",
     home: LoginApp(),
     builder: EasyLoading.init(),
   ));

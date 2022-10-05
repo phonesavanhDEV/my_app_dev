@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_app_dev/login/index.dart';
+import 'package:my_app_dev/menu/contact.dart';
 import 'package:my_app_dev/qr_scanner/_qr_scan.dart';
 
 class Home extends StatefulWidget {
@@ -67,6 +71,13 @@ final List<Widget> imageSliders = imgList
     .toList();
 
 class _HomeState extends State<Home> {
+  final _fireStore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +136,12 @@ class _HomeState extends State<Home> {
                       Column(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginApp()));
+                            },
                             icon: const Icon(
                               FontAwesomeIcons.userGroup,
                               color: Colors.red,
@@ -306,188 +322,73 @@ class _HomeState extends State<Home> {
               //       )),
               // ),
               Container(
-                height: 200,
+                constraints: BoxConstraints(
+                    minHeight: 100, minWidth: double.infinity, maxHeight: 300),
                 child: Row(
                   children: [
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width / 2 - 32,
-                      margin: EdgeInsets.all(16.0),
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        boxShadow: [
-                          // this is the shadow of the card
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0.5,
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                              'https://cdn.pixabay.com/photo/2022/08/05/05/59/korea-7366036__340.jpg'),
-                          Text(
-                            "ຊື່ສິນຄ້າ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
+                    StreamBuilder<QuerySnapshot>(
+                      ///
+                      stream: _fireStore
+                          .collection('productDetail')
+                          .orderBy('DateE', descending: false)
+                          .snapshots(),
+
+                      ///flutter aysnc snapshot
+                      builder: (context, snapshot) {
+                        List<MessageBubble> todoWidgets = [];
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.lightBlueAccent,
                             ),
+                          );
+                        }
+                        final todoLists = snapshot.data!.docs;
+
+                        for (var todoList in todoLists) {
+                          final _name = (todoList.data() as dynamic)['Name'];
+
+                          final _price = (todoList.data() as dynamic)['price'];
+
+                          final _type = (todoList.data() as dynamic)['type'];
+                          final _descript =
+                              (todoList.data() as dynamic)['description'];
+                          final _dateM = (todoList.data() as dynamic)['DateM'];
+                          final _dateE = (todoList.data() as dynamic)['DateE'];
+                          final _amount =
+                              (todoList.data() as dynamic)['Amount'];
+                          final _createDate =
+                              (todoList.data() as dynamic)['createDate'];
+                          final _photo = (todoList.data() as dynamic)['Image'];
+
+                          final messageWidget = MessageBubble(
+                            name: '$_name',
+                            //isLoggedIn: currentUser == loggedIn,
+                            price: '$_price',
+                            type: '$_type',
+                            description: '$_descript',
+                            DateM: '$_dateM',
+                            DateE: '$_dateE',
+                            Amount: '$_amount',
+                            createDate: '$_createDate',
+                            photo: '$_photo',
+                          );
+
+                          todoWidgets.add(messageWidget);
+                        }
+
+                        return Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GridView.count(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 4.0,
+                                mainAxisSpacing: 8.0,
+                                children: todoWidgets),
                           ),
-                          Text(
-                            "ລາຄາ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width / 2 - 32,
-                      margin: EdgeInsets.all(16.0),
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        boxShadow: [
-                          // this is the shadow of the card
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0.5,
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                              'https://cdn.pixabay.com/photo/2022/08/02/04/11/city-7359471__340.jpg'),
-                          Text(
-                            "ຊື່ສິນຄ້າ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            "ລາຄາ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 200,
-                child: Row(
-                  children: [
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width / 2 - 32,
-                      margin: EdgeInsets.all(16.0),
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        boxShadow: [
-                          // this is the shadow of the card
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0.5,
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                              'https://cdn.pixabay.com/photo/2020/09/14/10/45/spaceship-5570682__340.jpg'),
-                          Text(
-                            "ຊື່ສິນຄ້າ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            "ລາຄາ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width / 2 - 32,
-                      margin: EdgeInsets.all(16.0),
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        boxShadow: [
-                          // this is the shadow of the card
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0.5,
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                              'https://cdn.pixabay.com/photo/2016/01/31/19/41/apple-1172060__340.jpg'),
-                          Text(
-                            "ຊື່ສິນຄ້າ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            "ລາຄາ:.....",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'NotoSansLao',
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -496,5 +397,127 @@ class _HomeState extends State<Home> {
         )
       ],
     )));
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  MessageBubble({
+    required this.name,
+    required this.price,
+    required this.type,
+    required this.description,
+    required this.DateM,
+    required this.DateE,
+    required this.Amount,
+    required this.createDate,
+    required this.photo,
+  });
+  final String name;
+  final String price;
+  final String type;
+  final String description;
+  final String DateM;
+  final String DateE;
+  final String Amount;
+  final String createDate;
+  final String photo;
+
+  // int _n = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        elevation: 10,
+        child: new InkWell(
+            onTap: () {
+              print("$name");
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Contact()));
+              //showModalBottomSheet
+              //mainAxisSize: MainAxisSize.min,
+              //showDialog
+              // showCupertinoModalPopup(
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return AlertDialog(
+              //         scrollable: true,
+              //         title: Text('Order'),
+              //         content: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Form(
+              //             child: Column(
+              //               children: <Widget>[
+              //                 Text('Name:$name'),
+              //                 Text('Price:$price'),
+              //                 Row(
+              //                     mainAxisAlignment:
+              //                         MainAxisAlignment.spaceEvenly,
+              //                     children: [
+              //                       new FloatingActionButton(
+              //                         onPressed: () {},
+              //                         child: new Icon(
+              //                           Icons.add,
+              //                           color: Colors.black,
+              //                         ),
+              //                         backgroundColor: Colors.white,
+              //                       ),
+              //                       new Text('',
+              //                           style: new TextStyle(fontSize: 60.0)),
+              //                       new FloatingActionButton(
+              //                         onPressed: () {},
+              //                         child: new Icon(
+              //                           Icons.minor_crash_outlined,
+              //                           color: Colors.black,
+              //                         ),
+              //                         backgroundColor: Colors.white,
+              //                       ),
+              //                     ])
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //         actions: [
+              //           TextButton(
+              //               child: Text("Submit"),
+              //               onPressed: () {
+              //                 // your code
+              //               })
+              //         ],
+              //       );
+              //     });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                // borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                boxShadow: [
+                  // this is the shadow of the card
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 0.5,
+                    offset: Offset(2.0, 2.0),
+                    blurRadius: 5.0,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 125,
+                    width: MediaQuery.of(context).size.width,
+                    child: ClipRRect(
+                      // borderRadius: BorderRadius.circular(15.0),
+                      child: Image.network('$photo', fit: BoxFit.fill),
+                    ),
+                  ),
+                  Text('Name:$name'),
+                  Text('Price:$price'),
+                  // TextButton(
+                  //   child: const Text('Like'),
+                  //   onPressed: () {/* ... */},
+                  // ),
+                ],
+              ),
+            )));
   }
 }

@@ -384,7 +384,7 @@ class _LoginApp extends State<LoginApp> {
     if (user != null) {
       print("Already singed-in with");
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Launcher()));
+          context, MaterialPageRoute(builder: (context) => Launcher(user)));
     }
   }
 }

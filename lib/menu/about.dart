@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +25,7 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
   final _fireStore = FirebaseFirestore.instance;
-
+  final User? user = FirebaseAuth.instance.currentUser();
   late String imgValue;
 
   late String Name;
@@ -404,7 +405,16 @@ class _AboutState extends State<About> {
                       ),
                       onPressed: () async {
                         uploadFile();
-                        _fireStore.collection('productDetail').add({
+                        //_fireStore.collection('productDetail').add({
+                        String id = FirebaseFirestore.instance
+                            .collection('productDetail')
+                            .doc()
+                            .id;
+                        FirebaseFirestore.instance
+                            .collection('productDetail')
+                            .doc(id)
+                            .set({
+                          'id': id,
                           'Name': Name,
                           'price': price,
                           'type': type,

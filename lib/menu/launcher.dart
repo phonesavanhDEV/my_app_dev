@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
+
 import 'home.dart';
 import 'contact.dart';
 import 'profile.dart';
@@ -10,7 +10,8 @@ import '/login/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Launcher extends StatefulWidget {
-  const Launcher({Key? key}) : super(key: key);
+  final User user;
+  const Launcher(this.user, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,6 +20,8 @@ class Launcher extends StatefulWidget {
 }
 
 class _LauncherState extends State<Launcher> {
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  final User? user = FirebaseAuth.instance.currentUser();
   String searchValue = '';
   int _selectedIndex = 0;
   final List<Widget> _pageWidget = <Widget>[
@@ -34,12 +37,12 @@ class _LauncherState extends State<Launcher> {
       label: 'ໜ້າຫຼັກ',
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.infoCircle),
-      label: 'ກ່ຽວກັບ',
+      icon: Icon(FontAwesomeIcons.store),
+      label: 'ສິນຄ້າ',
     ),
     BottomNavigationBarItem(
-      icon: Icon(FontAwesomeIcons.userAlt),
-      label: 'ໂປຣໄຟຣ',
+      icon: Icon(FontAwesomeIcons.fileCircleExclamation),
+      label: 'ລາຍລະອຽດ',
     ),
     BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.addressCard),
@@ -58,6 +61,11 @@ class _LauncherState extends State<Launcher> {
   }
 
   @override
+  initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -68,7 +76,8 @@ class _LauncherState extends State<Launcher> {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: Text("Home"),
-                  accountEmail: Text("xxx", style: TextStyle(fontSize: 16)),
+                  accountEmail:
+                      Text("${user?.email}", style: TextStyle(fontSize: 16)),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage: AssetImage('assets/images/new_logo.png'),
@@ -128,9 +137,9 @@ class _LauncherState extends State<Launcher> {
               ],
             ),
           ),
-          appBar: EasySearchBar(
-            title: Text(''),
-            onSearch: (value) => setState(() => searchValue = value),
+          appBar: AppBar(
+            title: Text('#homethedemo'),
+            // onSearch: (value) => setState(() => searchValue = value),
           ),
           body: _pageWidget.elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
